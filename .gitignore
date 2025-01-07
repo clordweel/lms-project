@@ -49,3 +49,16 @@ vite.config.ts.*
 *.sln
 *.sw?
 .history
+
+# docker
+!/docker/development/docker-compose.yml
+/docker/development/data/db/*
+!/docker/development/data/db/.gitkeep
+/docker/development/data/storage/*
+!/docker/development/data/storage/.gitkeep
+
+!/docker/production/docker-compose.yml
+/docker/production/data/db/*
+/docker/production/data/storage/*
+!/docker/production/data/db/.gitkeep
+!/docker/production/data/storage/.gitkeep

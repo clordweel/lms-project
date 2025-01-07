@@ -9,7 +9,7 @@ interface RunOptions {
 export async function run(options: RunOptions) {
   const { command } = options;
   if (!command) {
-    console.error('Please enter the command to run');
+    console.error('请输入需要执行的命令');
     process.exit(1);
   }
   const { packages } = await getPackages();
@@ -26,7 +26,7 @@ export async function run(options: RunOptions) {
   let selectPkg: string | symbol;
   if (selectPkgs.length > 1) {
     selectPkg = await select<any, string>({
-      message: `Select the app you need to run [${command}]:`,
+      message: `选择需要执行的包 [${command}]:`,
       options: selectPkgs.map((item) => ({
         label: item?.packageJson.name,
         value: item?.packageJson.name,
@@ -34,7 +34,7 @@ export async function run(options: RunOptions) {
     });
 
     if (isCancel(selectPkg) || !selectPkg) {
-      cancel('👋 Has cancelled');
+      cancel('👋 已取消');
       process.exit(0);
     }
   } else {
@@ -42,7 +42,7 @@ export async function run(options: RunOptions) {
   }
 
   if (!selectPkg) {
-    console.error('No app found');
+    console.error('未找到对应的包');
     process.exit(1);
   }
 
