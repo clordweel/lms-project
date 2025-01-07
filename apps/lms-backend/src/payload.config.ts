@@ -82,13 +82,4 @@ export default buildConfig({
       },
     },
   },
-  endpoints: [
-    {
-      path: '/user/info',
-      method: 'get',
-      handler: async (args) => {
-        return vbenResponse(args.user)
-      },
-    }
-  ],
 })

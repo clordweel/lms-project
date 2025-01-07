@@ -4,7 +4,7 @@
 export async function vbenResponseHook(args: any) {
   const origin = args.req.headers.get('Origin')
 
-  if (['http://localhost:5777'].includes(origin)) {
+  if (['http://localhost:5777', 'http://127.0.0.1:5777', 'https://lms.example.com'].includes(origin)) {
     // 复制原始数据
     const data = JSON.parse(JSON.stringify(args.result))
 

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { vbenResponseHook } from '@/lib/vben/hooks'
+import { vbenResponse } from '@/lib/vben/response'
 
 export const Auth: CollectionConfig = {
   slug: 'auth',
@@ -46,5 +47,17 @@ export const Auth: CollectionConfig = {
       vbenResponseHook,
     ],
   },
+  endpoints: [
+    {
+      path: '/codes',
+      method: 'get',
+      handler: async (args) => {
+        return vbenResponse({
+          codes: ['AC_100100', 'AC_100110', 'AC_100120', 'AC_100010'],
+          username: 'vben',
+        })
+      },
+    }
+  ]
 }
 
