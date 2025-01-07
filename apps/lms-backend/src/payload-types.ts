@@ -146,7 +146,14 @@ export interface Auth {
  */
 export interface User {
   id: number;
+  avatar?: (number | null) | Media;
   name?: string | null;
+  gender?: ('male' | 'female') | null;
+  age?: number | null;
+  birthday?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  roles?: ('super' | 'admin' | 'user' | 'student' | 'teacher')[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -281,7 +288,14 @@ export interface AuthSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  avatar?: T;
   name?: T;
+  gender?: T;
+  age?: T;
+  birthday?: T;
+  phone?: T;
+  email?: T;
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
 }

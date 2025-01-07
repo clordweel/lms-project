@@ -31,28 +31,15 @@ export const Auth: CollectionConfig = {
       name: 'user',
       type: 'relationship',
       relationTo: 'users',
+      hasMany: false,
     }
   ],
-  hooks: {
-    afterOperation: [
-      async ({ operation, result }) => {
-        if (operation === 'login') {
-          Object.assign(result, {
-            accessToken: result.token,
-            refreshToken: result.token,
-          })
-          delete result.token
-        }
-      },
-      vbenResponseHook,
-    ],
-  },
   endpoints: [
     {
       path: '/codes',
       method: 'get',
       handler: async (args) => {
-        return vbenResponse({
+        return Response.json({
           codes: ['AC_100100', 'AC_100110', 'AC_100120', 'AC_100010'],
           username: 'vben',
         })

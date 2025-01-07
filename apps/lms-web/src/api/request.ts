@@ -1,7 +1,6 @@
 /**
  * 该文件可自行根据业务逻辑进行调整
  */
-import type { HttpResponse } from '@vben/request';
 
 import { useAppConfig } from '@vben/hooks';
 import { preferences } from '@vben/preferences';
@@ -69,14 +68,28 @@ function createRequestClient(baseURL: string) {
     },
   });
 
+    // response数据解构
+    client.addResponseInterceptor<any>({
+      fulfilled: (response) => {
+        const { status, config } = response;
+        if (!(status >= 200 && status < 400)) {
+          return response;
+        }
+        if (config.url === '/auth/login') {
+          response.data.accessToken = response.data.token
+          response.data.refreshToken = response.data.token
+          delete response.data.token
+        }
+        return response
+      },
+    });
+
   // response数据解构
-  client.addResponseInterceptor<HttpResponse>({
+  client.addResponseInterceptor<any>({
     fulfilled: (response) => {
       const { data: responseData, status } = response;
-
-      const { code, data } = responseData;
-      if (status >= 200 && status < 400 && code === 0) {
-        return data;
+      if (status >= 200 && status < 400) {
+        return responseData;
       }
       throw Object.assign({}, response, { response });
     },

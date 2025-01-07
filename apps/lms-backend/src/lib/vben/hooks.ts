@@ -9,9 +9,9 @@ export async function vbenResponseHook(args: any) {
     const data = JSON.parse(JSON.stringify(args.result))
 
     // 删除原始数据
-    for (const key in args.result) {
-      delete args.result[key]
-    }
+    // for (const key of Object.keys(args.result)) {
+    //   delete args.result[key]
+    // }
 
     // 添加 vben 响应格式
     Object.assign(args.result, { data, code: 0 })
