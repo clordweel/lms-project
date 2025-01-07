@@ -3,11 +3,6 @@ version: '3.8'
 services:
   db:
     image: postgres:17.1
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 3s
-      timeout: 10s
-      retries: 5
     ports:
       - 5432:5432
     environment:
@@ -23,11 +18,6 @@ services:
     image: redis:7.4
     ports:
       - 6379:6379
-    healthcheck:
-      test: ["CMD", "redis-server", "--ping"]
-      interval: 3s
-      timeout: 10s
-      retries: 5
     environment:
       - TZ=Asia/Shanghai
     restart: unless-stopped
@@ -35,11 +25,6 @@ services:
   storage:
     image: minio/minio
     command: server /data --console-address ":9001"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://minio:9000/minio/health/live"]
-      interval: 3s
-      timeout: 10s
-      retries: 5
     ports:
       - 9000:9000
       - 9001:9001
@@ -50,3 +35,18 @@ services:
     volumes:
       - ./data/storage:/data
     restart: unless-stopped
+
+  # nocodb:
+  #   image: nocodb/nocodb:latest
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     - TZ=Asia/Shanghai
+  #     - NC_DB=pg://host.docker.internal:5432?u=postgres&p=postgres&d=postgres
+  #     - NC_AUTH_JWT_SECRET=56911121-0a93-45e8-87ab-eb857f20a010
+  #     - NC_ADMIN_EMAIL=admin@example.com
+  #     - NC_ADMIN_PASSWORD=admin123
+  #   volumes:
+  #     - ./data/nocodb:/usr/app/data/
+  #   restart: unless-stopped
+
